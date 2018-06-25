@@ -91,12 +91,11 @@ const queryData = async (substr, pageNum) => {
 // });
 
 
-(async function () {
-  var movieTitles2;
 
-  getMovieTitles("man")
-    .then((m) => {
-      movieTitles2 = m;
-      console.log(movieTitles2, movieTitles.length);
-    });
-})();
+var movieTitles2;
+
+getMovieTitles("man")
+  .then((m) => {
+    movieTitles2 = m;
+    console.log(movieTitles2, movieTitles.length);
+  });
