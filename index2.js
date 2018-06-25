@@ -20,7 +20,7 @@ async function getMovieTitles(substr) {
 const queryData = async (substr, pageNum) => {
 
 
-  return new Promise((resolve, reject) => {
+  return new Promise((yes, no) => {
     let baseUrl = "https://jsonmock.hackerrank.com/api/movies/search/?Title=";
     let url = `${baseUrl}${substr}&page=${pageNum}`;
 
@@ -45,7 +45,7 @@ const queryData = async (substr, pageNum) => {
           console.log(movie.Title);
           movieTitles.push(movie.Title);
         });
-        resolve();
+        yes();
       });
     });
   });
@@ -92,6 +92,11 @@ const queryData = async (substr, pageNum) => {
 
 
 (async function () {
-  var movieTitles2 = await getMovieTitles("spiderman");
-  console.log(movieTitles2);
+  var movieTitles2;
+
+  getMovieTitles("man")
+    .then((m) => {
+      movieTitles2 = m;
+      console.log(movieTitles2, movieTitles.length);
+    });
 })();
