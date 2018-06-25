@@ -1,6 +1,6 @@
 function fooBar(n) {
   return new Promise((yes, no) => {
-    if (n % 2 === 0) {
+    if (n <= 10) {
       console.log(`number ${n} is good`);
       yes(n + 1);
     } else {
@@ -11,6 +11,13 @@ function fooBar(n) {
 }
 
 fooBar(5)
+  .then((result) => fooBar(result))
+  .then((result) => fooBar(result))
+  .then((result) => fooBar(result))
+  .then((result) => fooBar(result))
+  .then((result) => fooBar(result))
+  .then((result) => fooBar(result))
+  .then((result) => fooBar(result))
   .then((result) => fooBar(result))
   .catch((error) => console.log(error));
 
