@@ -12,39 +12,44 @@ async function getMovieTitles(substr) {
     //also update numPages after first request : TODO
     page++;
     numPages--;
+    console.log("after decrementing numPages", numPages)
   }
   return movieTitles;
 }
 
 const queryData = async (substr, pageNum) => {
-  let baseUrl = "https://jsonmock.hackerrank.com/api/movies/search/?Title=";
-  let url = `${baseUrl}${substr}&page=${pageNum}`;
-  let totalPages;
-  let movies;
 
-  await https.get(url, (resp) => { 
-    let movieData = '';
 
-      // A chunk of data has been recieved. 
-    resp.on('data', (chunk) => {  
-      movieData += chunk; 
-    });
+  return new Promise((resolve, reject) => {
+    let baseUrl = "https://jsonmock.hackerrank.com/api/movies/search/?Title=";
+    let url = `${baseUrl}${substr}&page=${pageNum}`;
 
-      // The whole response has been received. Print out the result. 
-    resp.on('end', () => {  
-      movieData = JSON.parse(movieData);
-      let movies = movieData.data;
-      if (firstTime) {
-        numPages = movieData.total_pages;
-        console.log("firstTime", numPages);
-        firstTime = false;
-      }
-      movies.forEach((movie) => {
-        console.log(movie.Title);
-        movieTitles.push(movie.Title);
+    https.get(url, (resp) => { 
+      let movieData = '';
+
+        // A chunk of data has been recieved. 
+      resp.on('data', (chunk) => {  
+        movieData += chunk; 
+      });
+
+        // The whole response has been received. Print out the result. 
+      resp.on('end', () => {  
+        movieData = JSON.parse(movieData);
+        let movies = movieData.data;
+        if (firstTime) {
+          numPages = movieData.total_pages;
+          console.log("firstTime", numPages);
+          firstTime = false;
+        }
+        movies.forEach((movie) => {
+          console.log(movie.Title);
+          movieTitles.push(movie.Title);
+        });
+        resolve();
       });
     });
   });
+
 };
 
 
